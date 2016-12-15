@@ -12,7 +12,7 @@ library(Rcpp)
 
 ########################################################
 ##########---Leyendo datos---##########################
-data4 <- read.csv(file="cheese.csv", header=T)
+data4 <- read.csv(file="./cheese.csv", header=T)
 Taste <- data4$taste
 data5 <- data4[, !names(data4) %in% c("id","taste")]
 
@@ -293,5 +293,3 @@ dashboardPage(
     )
   )
 )
-
-#shiny::runGitHub("compstat2016", "farid7")

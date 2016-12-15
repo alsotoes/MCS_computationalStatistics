@@ -6,9 +6,7 @@ if(!require(DT)) install.packages("DT")
 library(ggplot2)
 library(DT)
 library(shiny)
-#setwd("/Users/LUSI_ITAM/Documents/farid/estadisticaComputacional_Clase/tareas/tarea4_setupReaingTable")
-#setwd("/home/farid/Documents/estadistica computacional 2016b/tarea4_despligaDatos")
-data <- read.csv(file="cheese.csv", header=T)
+data <- read.csv(file="./cheese.csv", header=T)
 
 shinyServer(function(input, output) {
   n <- dim(data)[1]
@@ -66,5 +64,3 @@ shinyServer(function(input, output) {
     hist(priori_a() * priori_b() * priori_sd(), main="distribucin aPriori")
   })
 })
-
-#shiny::runGitHub("compstat2016", "farid7", subdir = "tarea4_despligaDatos")

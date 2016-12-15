@@ -5,9 +5,7 @@ if(!require(DT)) install.packages("DT")
 library(ggplot2)
 library(DT)
 library(shiny)
-#setwd("/Users/LUSI_ITAM/Documents/farid/estadisticaComputacional_Clase/tareas/tarea4_setupReaingTable")
-setwd("/home/farid/Documents/estadistica computacional 2016b/tarea4_despligaDatos")
-data <- read.csv(file="cheese.csv", header=T)
+data <- read.csv(file="./cheese.csv", header=T)
 
 Taste <- data$taste
 data <- data[, !names(data) %in% c("id","taste")]

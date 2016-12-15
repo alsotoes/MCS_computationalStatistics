@@ -5,7 +5,6 @@ library(shiny)
 
 ui <- fluidPage(
   h1("Tarea2 Aceptación Rechazo"),
-  h6("Angel Farid Fajardo Oroz"),
   h6("MCC ITAM"),
   
   sidebarLayout(
@@ -57,5 +56,3 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
-
-#shiny::runGitHub("compstat2016", "farid7", subdir = "Tarea1_GeneradorNumerosAleatorios")

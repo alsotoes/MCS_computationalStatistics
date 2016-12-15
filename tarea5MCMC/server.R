@@ -5,9 +5,7 @@ if(!require(DT)) install.packages("DT")
 library(ggplot2)
 library(DT)
 library(shiny)
-#setwd("/Users/LUSI_ITAM/Documents/farid/estadisticaComputacional_Clase/tareas/tarea4_setupReaingTable")
-#setwd("/home/farid/Documents/estadisticaComputacional/compstat2016/tarea5_MCMC")
-data <- read.csv(file="cheese.csv", header=T)
+data <- read.csv(file="./cheese.csv", header=T)
 
 Taste <- data$taste
 data <- data[, !names(data) %in% c("id","taste")]
@@ -247,5 +245,3 @@ shinyServer(function(input, output) {
  })
 
 })
-
-#shiny::runGitHub("compstat2016", "farid7", subdir = "tarea5_MCMC")

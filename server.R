@@ -582,4 +582,3 @@ shinyServer(function(input, output) {
   })
 })
 
-#shiny::runGitHub("compstat2016", "farid7")

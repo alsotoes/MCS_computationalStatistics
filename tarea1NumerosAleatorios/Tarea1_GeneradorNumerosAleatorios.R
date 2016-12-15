@@ -4,7 +4,6 @@ library(shiny)
 
 ui <- fluidPage(
     h1("Tarea1 Generador de números aleatorios"),
-    h6("Angel Farid Fajardo Oroz"),
     h6("MCC ITAM"),
 
     fluidRow(column(4, offset = 1, sliderInput("num", h5("Cantidad de números a simular"),
@@ -153,5 +152,3 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
-
-#shiny::runGitHub("compstat2016", "farid7", subdir = "Tarea1_GeneradorNumerosAleatorios")

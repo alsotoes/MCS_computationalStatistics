@@ -98,5 +98,3 @@ shinyServer(function(input, output) {
     aux
   })
 })
-
-#shiny::runGitHub("compstat2016", "farid7", subdir = "tarea3_integracionMonteCarlo")

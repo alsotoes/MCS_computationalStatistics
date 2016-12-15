@@ -5,13 +5,10 @@ if(!require(DT)) install.packages("DT")
 library(ggplot2)
 library(DT)
 library(shiny)
-setwd("/Users/LUSI_ITAM/Documents/farid/estadisticaComputacional_Clase/tareas/tarea4_setupReaingTable")
-#setwd("/home/farid/Documents/estadistica computacional 2016b/tarea4_despligaDatos")
-data <- read.csv(file="cheese.csv", header=T)
+data <- read.csv(file="./cheese.csv", header=T)
 
 ui <- fluidPage(
   titlePanel("Tarea4_DataTable"),
-  h4("Angel Farid Fajardo Oroz"),
   h5("MCC"),
   
   sidebarLayout(
@@ -105,5 +102,3 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
-
-#shiny::runGitHub("compstat2016", "farid7", subdir = "tarea4_despligaDatos")

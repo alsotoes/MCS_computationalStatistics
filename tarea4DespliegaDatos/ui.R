@@ -11,7 +11,6 @@ data <- read.csv(file="cheese.csv", header=T)
 
 shinyUI(fluidPage(
   titlePanel("Tarea4_DataTable"),
-  h4("Angel Farid Fajardo Oroz"),
   h5("MCC"),
   
   sidebarLayout(
@@ -44,5 +43,3 @@ shinyUI(fluidPage(
       
     )
   )))
-
-#shiny::runGitHub("compstat2016", "farid7", subdir = "tarea4_despligaDatos")

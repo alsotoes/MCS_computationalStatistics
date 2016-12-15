@@ -41,7 +41,6 @@ trapezoid <- function(n, a, b, FUN){
 
 ui <- fluidPage(  
   h1("Tarea2 Integracion Monte Carlo"),
-  h6("Angel Farid Fajardo Oroz"),
   h6("MCC ITAM"),
   h1(""),
   
@@ -134,4 +133,3 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
-#shiny::runGitHub("compstat2016", "farid7", subdir = "tarea3_integracionMonteCarlo")
