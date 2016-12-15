@@ -60,9 +60,9 @@ NumericVector proposal(NumericVector theta){
   double b = theta[1];
   double sd = theta[2];
   
-  double p1 = R::rnorm(a,  0.1);
-  double p2 = R::rnorm(b,  0.5);
-  double p3 = R::rnorm(sd, 0.3);
+  double p1 = R::rnorm(a,  2.38*0.98);
+  double p2 = R::rnorm(b,  2.38*0.98);
+  double p3 = R::rnorm(sd, 2.38*0.98);
   
   NumericVector aux(3);
   aux[0] = p1;
