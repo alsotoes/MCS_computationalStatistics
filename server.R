@@ -172,7 +172,7 @@ shinyServer(function(input, output) {
            q2 = quantile(data1(), seq(0,1,0.01));
            plot(q1, q2, main="Q-Q Plot", ylab = "geomInv", xlab="qgeom")}
     )
-    plot(data1()[1:length(data1())-1], data1()[2:length(data1())], main = "Secuencia en n??meros")
+    plot(data1()[1:length(data1())-1], data1()[2:length(data1())], main = "Secuencia en números")
     #qplot(data1()[-length(data1())], data1()[-1], main = "Secuencia en n??meros")
   })
   output$distPlot <- renderPlot({
@@ -398,11 +398,13 @@ shinyServer(function(input, output) {
       theta0 <- c(1,1,1)
       temp <- dataInput()
       chain <- runMCMC(x=temp[,2], y=Taste, startValue=theta0, iterations=input$sLongitud)
+      chain <- chain[-(1:input$sBurnin),]
       chain <- data.frame(a=chain[,1], b=chain[,2], sd=chain[,3])
       if(input$nCadenas > 1){
        for (i in 2:input$nCadenas){
         aux <- theta0 + round(10*runif(1))
         aux2 <- runMCMC(x=temp[,2], y=Taste, startValue=aux, iterations=input$sLongitud)
+        aux2 <- aux2[-(1:input$sBurnin),]
         aux2 <- data.frame(a=aux2[,1], b=aux2[,2], sd=aux2[,3])
         chain <- cbind(chain, aux2)
        }
@@ -425,7 +427,7 @@ shinyServer(function(input, output) {
     if(is.null(df()))
       return()
     else{
-      return({AA = mean(df()[-(1:input$sBurnin),1])
+      return({AA = mean(df()[,1])
       hist(df()[,1], main=paste("Posterior A: ", AA))
       abline(v=AA, col="red")
       })
@@ -435,7 +437,7 @@ shinyServer(function(input, output) {
     if(is.null(df()))
       return()
     else{
-      return({BB = mean(df()[-(1:input$sBurnin),2])
+      return({BB = mean(df()[,2])
       hist(df()[,2], main=paste("Posterior B: ", BB))
       abline(v=BB, col="red")
       })
@@ -445,7 +447,7 @@ shinyServer(function(input, output) {
     if(is.null(df()))
       return()
     else{
-      return({Ssd = mean(df()[-(1:input$sBurnin),3])
+      return({Ssd = mean(df()[,3])
       hist(df()[,3], main=paste("Posterior A: ", Ssd))
       abline(v=Ssd, col="red")
       })
@@ -516,13 +518,9 @@ shinyServer(function(input, output) {
       return()
     else{
       return({Ssd = mean(df()[-(1:input$sBurnin),3])
-      
-      # hist(df()[,3], main=paste("Posterior A: ", Ssd))
-      # abline(v=Ssd, col="red")
-      
       h <- hist(df()[,3], plot=F, breaks=10)
       d <- density(df()[,3])
-      hist(df()[,3], main=paste("Posterior B: ", Ssd),  breaks=10)
+      hist(df()[,3], main=paste("Posterior sd: ", Ssd),  breaks=10)
       abline(v=Ssd, col="red")
       lines(x=d$x, y=d$y*length(df()[,3])*diff(h$breaks)[1], ldw=2)
       })
@@ -535,22 +533,32 @@ shinyServer(function(input, output) {
       return()
     else
       return({
-        plot(dataInput()[,2], dataInput()[,1])
+        plot(dataInput()[,2], dataInput()[,1], main="Regresiòn lineal", xlab="Taste", ylab="Acido")
         lines(dataInput()[,2], dataInput()[,2]*mean(df()[,1]) + mean(df()[,2]), col="blue")
       })
   })
 
+  output$autocorrelacionCalc <- renderPlot({
+    if(is.null(input$cVariables))
+      return()
+    else
+      return({
+        pacf(df()[,1], lag.max = NULL, plot = TRUE, na.action = na.fail, main="Auto-correlación")
+        #acf(df()[,1], lag.max = NULL, type = c("correlation", "covariance", "partial"), plot = TRUE, na.action = na.fail, demean = TRUE)
+      })
+  })
   ##############################################################################
   output$pConvergencia_A <- renderPlot({
     if(is.null(df()))
       return()
     else{
       par(mfrow=(c(1,1)))
-      return({plot(df()[,1], type = "l", main="Parametro A")
-        lines(df()[,4], col="red")
-        lines(df()[,7], col="blue")
-        lines(df()[,10], col="green")
-        lines(df()[,13], col="black")
+      return({plot(df()[,1], type = "l", main="Parametro A", ylab="A", xlab="iteraciones + Burnin")
+        if(input$nCadenas > 1){
+          for(i in 2:input$nCadenas){
+        lines(df()[,i*3-2], col=i)
+          }
+        }
       })
     }
   })
@@ -559,11 +567,12 @@ shinyServer(function(input, output) {
       return()
     else{
       par(mfrow=(c(1,1)))
-      return({plot(df()[,2], type = "l", main="Parametro B")
-        lines(df()[,5], col="red")
-        lines(df()[,8], col="blue")
-        lines(df()[,11], col="green")
-        lines(df()[,14], col="black")
+      return({plot(df()[,2], type = "l", main="Parametro B", ylab="B", xlab="iteraciones + Burnin")
+        if(input$nCadenas > 1){
+          for(i in 2:input$nCadenas){
+            lines(df()[,i*3-1], col=i)
+          }
+        }
       })
     }
   })
@@ -572,11 +581,12 @@ shinyServer(function(input, output) {
       return()
     else{
       par(mfrow=(c(1,1)))
-      return({plot(df()[,3], type = "l", main="Parametro Sd")
-        lines(df()[,6], col="red")
-        lines(df()[,9], col="blue")
-        lines(df()[,12], col="green")
-        lines(df()[,15], col="black")
+      return({plot(df()[,3], type = "l", main="Parametro Sd", ylab="Sd", xlab="iteraciones + Burnin")
+        if(input$nCadenas > 1){
+          for(i in 2:input$nCadenas){
+            lines(df()[,i*3], col=i)
+          }
+        }
       })
     }
   })

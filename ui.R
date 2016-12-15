@@ -12,7 +12,7 @@ library(Rcpp)
 
 ########################################################
 ##########---Leyendo datos---##########################
-data4 <- read.csv(file="./cheese.csv", header=T)
+data4 <- read.csv(file="cheese.csv", header=T)
 Taste <- data4$taste
 data5 <- data4[, !names(data4) %in% c("id","taste")]
 
@@ -28,7 +28,7 @@ dashboardPage(
     title = "Estadística computacional",
     #    title = tags$a(href='http://mycompanyishere.com',
     #                   tags$img(src='logo_itam_70.png')),
-    titleWidth = "900px"
+    titleWidth = "850px"
     ),
   skin = "green",
   dashboardSidebar(
@@ -51,13 +51,7 @@ dashboardPage(
                            includeMarkdown("md/hw01.md")
                          )
                 ),
-                tabPanel("Teoría",
-                         box(
-                           withMathJax(),
-                           width = 15,
-                           includeMarkdown("md/teo01.md")
-                         )
-                ),
+  
                 tabPanel( "Ejercicio",
                           fluidRow(
                             box(title = "Parámetros", "", width=12,
@@ -111,13 +105,7 @@ dashboardPage(
                              includeMarkdown("md/hw02.md")
                            )
                   ),
-                  tabPanel("Teoría",
-                           box(
-                             withMathJax(),
-                             width = 15,
-                             includeMarkdown("md/teo02.md")
-                           )
-                  ),
+                 
                   tabPanel( "Ejercicio",
                             fluidRow(
                               sidebarLayout(
@@ -132,7 +120,7 @@ dashboardPage(
                                               max=0.1, min=0.01, value=0.05, step=0.01),
                                   
                                   sliderInput("n", 
-                                              "Number of random points:", 
+                                              "Número de puntos aleatorios:", 
                                               value = 100,
                                               min = 2, 
                                               max = 1000)
@@ -156,30 +144,22 @@ dashboardPage(
       tabItem(tabName = "tarea4",
               h2("Tarea 04: Set up inicial para MCMC"),
               tabsetPanel(
-                tabPanel("Generalidades",
+                tabPanel("Instrucciones",
                          box(
                            width = 15,
-                           includeMarkdown("md/hw4-6.md")
+                           includeMarkdown("md/hw04.md")
                          )
                 ),
                 
-                tabPanel("Teoria",
-                         box(
-                           withMathJax(),
-                           width = 15,
-                           "falta"
-                           #includeMarkdown("md/teo02.md")
-                         )
-                ),
-                tabPanel("Datos iniciales",
+                tabPanel("Ejercicio",
                          sidebarLayout(
                            sidebarPanel(
                              checkboxGroupInput("t4_cVariables", h3("Variables"),
                                                 choices = names(data4)),
                              h4("Parámetros aPriori"),
-                             sliderInput("t4_s_a", "a -> Unif ", min=1, max=10, value=c(5,8)),
-                             sliderInput("t4_s_b", "b <- Norm", min=1, max=10, value=5),
-                             sliderInput("t4_s_sigma", "sigma -> Unif", min=1, max=10, value=c(5, 6))
+                             sliderInput("t4_s_a", "a -> Unif(min, max) ", min=1, max=10, value=c(5,8)),
+                             sliderInput("t4_s_b", "b <- Norm(sd)", min=1, max=10, value=5),
+                             sliderInput("t4_s_sigma", "sigma -> Unif(min, max)", min=1, max=10, value=c(5, 6))
                            ),
                            
                            mainPanel(
@@ -215,18 +195,10 @@ dashboardPage(
                 tabPanel("Generalidades",
                          box(
                            width = 15,
-                           includeMarkdown("md/hw4-6.md")
+                           includeMarkdown("md/hw05.md")
                          )
                 ),
                 
-                tabPanel("Teoria",
-                         box(
-                           withMathJax(),
-                           width = 15,
-                           "falta"
-                           #includeMarkdown("md/teo02.md")
-                         )
-                ),
                 tabPanel("Regresion Bayesiana",
                          sidebarLayout(
                            sidebarPanel(
@@ -274,8 +246,8 @@ dashboardPage(
                                          ),
                                          tabPanel("Multiples cadenas",
                                                   fluidRow(
-                                                    column(4, verbatimTextOutput("summary")),
-                                                    column(4, plotOutput("regresionCalc")),
+                                                    column(6, plotOutput("regresionCalc")),
+                                                    column(6, plotOutput("autocorrelacionCalc")),
                                                     column(12, DT::dataTableOutput("cadenasMCMC"))
                                                   )),
                                          tabPanel("Convergencia de MCMC's",
